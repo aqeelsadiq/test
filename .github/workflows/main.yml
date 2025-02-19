@@ -1,18 +1,22 @@
-
-name: EC2 Self-hosted
+name: EC2 Self-hosted Runner Management
 
 on:
-  # This triggers the workflow when a new job is queued or when a push is made
+  # Trigger when a new job is queued or when a push is made
   push:
     branches:
       - main
-  # Schedule to check for idle EC2 instance after 15 minutes of inactivity
+  pull_request:
+    branches:
+      - main
+
+  # Schedule job to check for idle EC2 instance every 15 minutes
   schedule:
     - cron: '*/15 * * * *'  # Check every 15 minutes
 
 jobs:
-  manage-ec2:
-    runs-on: self-hosted  # Use the self-hosted runner on your EC2 instance
+  # This job ensures the EC2 instance is running if there is a job queued
+  manage-ec2-start:
+    runs-on: ubuntu-latest # GitHub-hosted runner to start the EC2 if it's not running
 
     steps:
       - name: Checkout repository
@@ -32,18 +36,22 @@ jobs:
             echo "EC2 instance is already running."
           fi
 
-      - name: Wait for 15 minutes and check for active jobs
-        run: |
-          echo "Waiting for 15 minutes to check for active jobs..."
-          sleep 60  # Wait for 15 minutes
+  # This job will check if there are active jobs or workflows
+  # If no jobs are active, EC2 instance will be stopped after 15 minutes
+  manage-ec2-stop:
+    runs-on: ubuntu-latest  # GitHub-hosted runner to check the EC2 instance status
 
-      - name: Check if any jobs are active
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Check for active jobs
         run: |
-          # Check if there are any active jobs or workflows running in the GitHub repo
           RUNNING_JOBS=$(curl -s -H "Authorization: token ${{ secrets.REPO_TOKEN }}" "https://api.github.com/repos/aqeelsadiq/test/actions/runs" | jq '.workflow_runs | length')
 
           if [ "$RUNNING_JOBS" -eq 0 ]; then
-            echo "No active jobs. Stopping EC2 instance..."
+            INSTANCE_ID="i-0bcdce5e423c87bea"
+            echo "No active jobs. Stopping EC2 instance after 15 minutes of inactivity..."
             aws ec2 stop-instances --instance-ids $INSTANCE_ID
           else
             echo "There are active jobs. EC2 instance remains running."
@@ -51,7 +59,8 @@ jobs:
 
   # Your workflow job that runs on the self-hosted runner
   build:
-    runs-on: self-hosted  # Runs on the self-hosted EC2 runner
+    runs-on: self-hosted  # EC2 instance should act as the self-hosted runner
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
