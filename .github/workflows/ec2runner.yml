@@ -23,7 +23,6 @@ jobs:
 
       - name: Start EC2 Instance
         if: steps.check-queued-jobs.outputs.result == 'true'
-        uses: aws-actions/aws-ec2@v1
         with:
           region: 'us-west-1' # Replace with your region
           instance-id: 'ami-07d2649d67dbe8900' # Replace with your EC2 instance ID
