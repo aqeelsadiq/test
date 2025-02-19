@@ -1,1 +1,61 @@
 
+name: EC2 Self-hosted Runner Management
+
+on:
+  # This triggers the workflow when a new job is queued or when a push is made
+  push:
+    branches:
+      - main
+  # Schedule to check for idle EC2 instance after 15 minutes of inactivity
+  schedule:
+    - cron: '*/15 * * * *'  # Check every 15 minutes
+
+jobs:
+  manage-ec2:
+    runs-on: self-hosted  # Use the self-hosted runner on your EC2 instance
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Start EC2 Instance if Stopped
+        run: |
+          INSTANCE_ID="i-0bcdce5e423c87bea"
+          # Use AWS CLI to check the EC2 instance status
+          STATUS=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query "Reservations[0].Instances[0].State.Name" --output text)
+
+          # Start the EC2 instance if it's stopped
+          if [[ "$STATUS" == "stopped" ]]; then
+            echo "Starting EC2 instance..."
+            aws ec2 start-instances --instance-ids $INSTANCE_ID
+          else
+            echo "EC2 instance is already running."
+          fi
+
+      - name: Wait for 15 minutes and check for active jobs
+        run: |
+          echo "Waiting for 15 minutes to check for active jobs..."
+          sleep 900  # Wait for 15 minutes
+
+      - name: Check if any jobs are active
+        run: |
+          # Check if there are any active jobs or workflows running in the GitHub repo
+          RUNNING_JOBS=$(curl -s -H "Authorization: token ${{ secrets.REPO_TOKEN }}" "https://api.github.com/repos/aqeelsadiq/test/actions/runs" | jq '.workflow_runs | length')
+
+          if [ "$RUNNING_JOBS" -eq 0 ]; then
+            echo "No active jobs. Stopping EC2 instance..."
+            aws ec2 stop-instances --instance-ids $INSTANCE_ID
+          else
+            echo "There are active jobs. EC2 instance remains running."
+          fi
+
+  # Your workflow job that runs on the self-hosted runner
+  build:
+    runs-on: self-hosted  # Runs on the self-hosted EC2 runner
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and Test
+        run: |
+          echo "Building and running tests on EC2..."
