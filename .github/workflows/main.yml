@@ -35,7 +35,7 @@ jobs:
       - name: Wait for 15 minutes and check for active jobs
         run: |
           echo "Waiting for 15 minutes to check for active jobs..."
-          sleep 900  # Wait for 15 minutes
+          sleep 60  # Wait for 15 minutes
 
       - name: Check if any jobs are active
         run: |
