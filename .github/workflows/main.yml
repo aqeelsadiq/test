@@ -1,4 +1,4 @@
-name: EC2 Self-hosted Runner Management
+name: EC2 Self-hosted Runner 
 
 on:
   # Trigger when a new job is queued or when a push is made
