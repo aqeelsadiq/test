@@ -1,6 +1,5 @@
-#added some
 
-name: CI
+name: CI cd
 
 # Controls when the workflow will run
 on:
