@@ -1,4 +1,4 @@
-name: CI cd pipe;ine
+name: CI cd pipeline
 #added   
 # Controls when the workflow
 on:
