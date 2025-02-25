@@ -1,6 +1,5 @@
 #check the instance id
-#desired 2
-
+#des
 name: check instance id
 on:
   push:
