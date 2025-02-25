@@ -1,4 +1,4 @@
-name: ceck instance id
+name: check instance id
 on:
   push:
     branches:
