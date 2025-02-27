@@ -1,4 +1,4 @@
-##check the instance id
+##check the instanc
 name: check instance id
 on:
   push:
