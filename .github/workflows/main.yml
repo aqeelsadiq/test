@@ -1,0 +1,17 @@
+##check th
+name: check instance id
+on:
+  push:
+    branches:
+      - main
+
+
+#job is running
+jobs:
+  identify-runner:
+    runs-on: self-hosted
+    steps:
+      - name: Get EC2 Instance ID
+        run: |
+          INSTANCE_ID=$(ec2metadata --instance-id)
+          echo "Running job on EC2 Instance: $INSTANCE_ID"
