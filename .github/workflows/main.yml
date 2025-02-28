@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   identify-runner:
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner-i-0bbc384ba024417fd]
     steps:
       - name: Get EC2 Instance ID
         run: |
