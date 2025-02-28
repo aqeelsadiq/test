@@ -1,10 +1,5 @@
 
 
-
-
-
-
-
 name: check instance id
 on:
   push:
