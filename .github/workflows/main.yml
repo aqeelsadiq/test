@@ -1,4 +1,4 @@
-
+#start the ec2 instances
 name: check instance id
 on:
   push:
