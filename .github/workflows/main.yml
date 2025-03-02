@@ -1,8 +1,4 @@
 
-
-
-
-
 name: check instance id
 on:
   push:
@@ -10,7 +6,7 @@ on:
       - main
 jobs:
   identify-runner:
-    runs-on: [self-hosted, runner-i-0bbc384ba024417fd]
+    runs-on: [self-hosted]
     steps:
       - name: Get EC2 Instance ID
         run: |
