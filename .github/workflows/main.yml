@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   identify-runner:
-    runs-on: [ec2-i-01099db44a6b28f36]
+    runs-on: [ec2-i-02962ea562df37c1b]
     steps:
       - name: Get EC2 Instance ID
         run: |
