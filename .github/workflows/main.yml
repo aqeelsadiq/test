@@ -1,4 +1,4 @@
-# job testing on self-
+# job testing on self
 name: check instance id
 on:
   push:
