@@ -1,4 +1,4 @@
-# job testing on self-hosted ]]
+# job testing on self-hosted
 name: check instance id
 on:
   push:
