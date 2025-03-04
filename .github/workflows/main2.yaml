@@ -13,3 +13,5 @@ jobs:
         run: |
           INSTANCE_ID=$(ec2metadata --instance-id)
           echo "Running job on EC2 Instance: $INSTANCE_ID"
+
+
