@@ -1,4 +1,4 @@
-# job2
+
 name: check instance id
 on:
   push:
