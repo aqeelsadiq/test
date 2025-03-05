@@ -1,5 +1,5 @@
 
-#check  job run on which 
+#check  job run on wh
 name: check instance id
 on:
   push:
