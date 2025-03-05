@@ -1,6 +1,6 @@
 
 
-#check  job run on which runner
+#check  job run on which run
 name: check instance id
 on:
   push:
