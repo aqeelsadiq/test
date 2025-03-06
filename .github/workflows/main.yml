@@ -1,4 +1,4 @@
-name: check instance id
+name: check instance id and logs
 on:
   push:
     branches:
