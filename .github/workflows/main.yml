@@ -1,3 +1,6 @@
+
+
+
 name: check the instance id
 on:
   push:
@@ -12,4 +15,3 @@ jobs:
           INSTANCE_ID=$(ec2metadata --instance-id)
           echo "Running job on EC2 Instance: $INSTANCE_ID"
           echo "hello world"          
-          
