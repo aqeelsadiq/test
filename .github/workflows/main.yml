@@ -1,6 +1,5 @@
 
 name: check the instance id
-
 on:
   push:
     branches:
