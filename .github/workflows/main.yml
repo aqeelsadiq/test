@@ -1,6 +1,4 @@
-
-
-# check instance id
+#ck instance id
 name: check the instance id
 on:
   push:
