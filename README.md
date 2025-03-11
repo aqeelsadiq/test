@@ -54,20 +54,18 @@ in the app dorectory i use the lambda function code lambda_function.py and path 
 # Deployment steps
 
 1. aws account and credentials configured
-use command aws configure
+    use command aws configure
 
 2. Terraform installed
 
 3. Githubactions setup to use self-hosted runners
 
 4. initialize terraform
-terraform init
+    terraform init
 
 5. plan terraform 
-
-terraform plan -var-file=terraform.tfvars  # use the file name because export TF_VAR to read the variable 
+    terraform plan -var-file=terraform.tfvars  # use the file name because export TF_VAR to read the variable 
 
 6. Apply terraform
-
-terraform apply --auto-approve -var-file=terraform.tfvars
+    terraform apply --auto-approve -var-file=terraform.tfvars
 
