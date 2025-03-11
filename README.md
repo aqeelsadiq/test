@@ -54,7 +54,6 @@ in the app dorectory i use the lambda function code lambda_function.py and path 
 # Deployment steps
 
 1. aws account and credentials configured
-
 use command aws configure
 
 2. Terraform installed
@@ -62,7 +61,6 @@ use command aws configure
 3. Githubactions setup to use self-hosted runners
 
 4. initialize terraform
-
 terraform init
 
 5. plan terraform 
