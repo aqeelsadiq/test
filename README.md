@@ -1,6 +1,6 @@
 This infrastructure contains Terraform configurations for deploying a self-hosted GitHub Actions runner  on AWS. The setup includes an API Gateway, a Lambda function to start EC2 instances, security groups, and a VPC.
 
-#Infrastructure
+# Infrastructure
 
 This project provisions the following AWS resources:
 
