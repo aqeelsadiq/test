@@ -23,5 +23,23 @@ Starts EC2 instances dynamically based on incoming GitHub webhooks.
 # GitHub Webhook Setup
 
 The GitHub webhook is configured using the Terraform GitHub provider. The token used for authentication is exported as an environment variable before running Terraform.
-export TF_VAR_github_token=<tokenid>
+export TF_VAR_github_token="tokenid"
 In the API Gateway module (modules/apigateway/main.tf), the webhook is set up to receive workflow-job events from GitHub and forward them to the Lambda function.
+
+# EC2 Instance Configuration
+
+In the EC2 module (modules/ec2/user_data.sh), the instance retrieves the GitHub Personal Access Token (PAT) and GitHub Owner details manually set in AWS Systems Manager SSM Parameter Store. The script fetches these values using the AWS CLI.
+"aws ssm get-parameter --name "/lambda/github-owner" --with-decryption --query "Parameter.Value" --output text --region us-west-1"
+
+# Lambda Function Configuration
+
+The Lambda module fetches the required GitHub credentials using a Terraform data block. These values are stored as environment variables in the Lambda function configuration:
+
+GITHUB_TOKEN: Retrieved from Terraform.
+
+GITHUB_OWNER: Retrieved from Terraform.
+
+REPO_NAME: Retrieved from Terraform.
+
+The Lambda function then uses these environment variables to interact with the GitHub API and determine which EC2 instance to start.
+
