@@ -30,6 +30,20 @@ In the API Gateway module (modules/apigateway/main.tf), the webhook is set up to
 
 # EC2 Instance Configuration
 
+The user_data.sh script performs the following steps:
+
+1. Installs necessary dependencies (AWS CLI, curl, unzip, jq).
+
+2. Retrieves GitHub Owner and Personal Access Token from AWS SSM Parameter Store.
+
+3. Downloads and installs the GitHub Actions runner.
+
+4. Registers the EC2 instance as a self-hosted runner in the GitHub repository.
+
+5. Configures the runner as a system service and starts it.
+
+6. Sets up a cron job (self_stop.sh) to monitor job activity and shut down the instance if no job run for 15 minutes.
+
 In the EC2 module (modules/ec2/user_data.sh), the instance retrieves the GitHub Personal Access Token (PAT) and GitHub Owner details manually set in AWS Systems Manager SSM Parameter Store. The script fetches these values using the AWS CLI.
 
 ec2 instances are in the private subnets.
@@ -39,7 +53,7 @@ ec2 instances are in the private subnets.
 # Lambda Function Configuration
 store the **github-token, github-owner and githubrepo-name** in the system manages parameter store manually. 
 
-use the data block to fetch the all three and use it for labda function.
+use the data block to fetch the all three and use it for lambda function.
 
 The Lambda module fetches the required GitHub credentials using a Terraform data block. These values are stored as environment variables in the Lambda function configuration:
 
@@ -52,7 +66,7 @@ REPO_NAME: Retrieved from Terraform.
 The Lambda function then uses these environment variables to interact with the GitHub API and determine which EC2 instance to start.
 
 # app
-in the app dorectory i use the lambda function code lambda_function.py and path is given in the module/lambda/main.tf
+in the app directory i use the lambda function code lambda_function.py and path is given in the module/lambda/main.tf
 
 # Deployment steps
 
