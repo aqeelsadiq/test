@@ -1,24 +1,6 @@
 This infrastructure contains Terraform configurations for deploying a self-hosted GitHub Actions runner  on AWS. The setup includes an API Gateway, a Lambda function to start EC2 instances, security groups, and a VPC.
 
-├── app
-│   ├── lambda_function.py         # Lambda function script
-│   └── start-multiple-ec2.zip     # Zipped Lambda deployment package
-├── main.tf                        # Root Terraform configuration
-├── modules                        # Modularized Terraform components
-│   ├── apigateway                 # API Gateway configuration
-│   ├── ec2                        # EC2 instance configuration
-│   ├── lambda                     # Lambda function configuration
-│   ├── sg                         # Security group configuration
-│   └── vpc                        # VPC configuration
-├── output.tf                      # Terraform output definitions
-├── provider.tf                    # Terraform provider configurations
-├── terraform.tfstate.d            # State files for different environments
-│   ├── dev
-│   └── prod
-├── terraform.tfvars               # Terraform variable values
-└── variable.tf                    # Terraform variable definitions
-
-###Infrastructure
+#Infrastructure
 
 This project provisions the following AWS resources:
 
