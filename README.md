@@ -37,6 +37,9 @@ ec2 instances are in the private subnets.
 "**aws ssm get-parameter --name "/lambda/github-owner" --with-decryption --query "Parameter.Value" --output text --region us-west-1**"
 
 # Lambda Function Configuration
+store the **github-token, github-owner and githubrepo-name** in the system manages parameter store manually. 
+
+use the data block to fetch the all three and use it for labda function.
 
 The Lambda module fetches the required GitHub credentials using a Terraform data block. These values are stored as environment variables in the Lambda function configuration:
 
