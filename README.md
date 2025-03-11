@@ -4,19 +4,19 @@ This infrastructure contains Terraform configurations for deploying a self-hoste
 
 This project provisions the following AWS resources:
 
-# VPC: 
+1. VPC: 
 A custom Virtual Private Cloud with subnets.
 
-# Security Groups: 
+2. Security Groups: 
 Firewall rules to control inbound/outbound traffic.
 
-# EC2 Instances: 
+3. EC2 Instances: 
 Self-hosted GitHub Actions runners.
 
-# API Gateway: 
+4. API Gateway: 
 A RESTful API endpoint to trigger the Lambda function.
 
-# Lambda Function: 
+5. Lambda Function: 
 Starts EC2 instances dynamically based on incoming GitHub webhooks.
 
 # modules Explanation
