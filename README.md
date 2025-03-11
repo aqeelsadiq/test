@@ -32,6 +32,8 @@ In the API Gateway module (modules/apigateway/main.tf), the webhook is set up to
 
 In the EC2 module (modules/ec2/user_data.sh), the instance retrieves the GitHub Personal Access Token (PAT) and GitHub Owner details manually set in AWS Systems Manager SSM Parameter Store. The script fetches these values using the AWS CLI.
 
+ec2 instances are in the private subnets.
+
 "aws ssm get-parameter --name "/lambda/github-owner" --with-decryption --query "Parameter.Value" --output text --region us-west-1"
 
 # Lambda Function Configuration
@@ -45,4 +47,29 @@ GITHUB_OWNER: Retrieved from Terraform.
 REPO_NAME: Retrieved from Terraform.
 
 The Lambda function then uses these environment variables to interact with the GitHub API and determine which EC2 instance to start.
+
+# app
+in the app dorectory i use the lambda function code lambda_function.py and path is given in the module/lambda/main.tf
+
+# Deployment steps
+
+1. aws account and credentials configured
+
+use command aws configure
+
+2. Terraform installed
+
+3. Githubactions setup to use self-hosted runners
+
+4. initialize terraform
+
+terraform init
+
+5. plan terraform 
+
+terraform plan -var-file=terraform.tfvars  # use the file name because export TF_VAR to read the variable 
+
+6. Apply terraform
+
+terraform apply --auto-approve -var-file=terraform.tfvars
 
